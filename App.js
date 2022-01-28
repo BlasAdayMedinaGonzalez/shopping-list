@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import { Button, ScrollView, StyleSheet, TextInput, Text, View } from "react-native";
 
 export default function App() {
   const [productName, setproductName] = useState("");
@@ -16,6 +16,7 @@ export default function App() {
       setproductList((currentProductList) => [...currentProductList, productName]);
       setproductName("");
     }
+    console.log(productList);
   }
 
   // const addproductHandler = () => {
@@ -42,7 +43,18 @@ export default function App() {
         />
         <Button style={styles.productButton} title="Add" onPress={addproductHandler} />
       </View>
-      <View></View>
+      <View style={styles.listContainer}>
+        <ScrollView>
+          {productList.map((product) => {
+              return ( 
+                <View key={Math.random().toString()} style={styles.listItem}>
+                  <Text style={styles.itemText}>{product}</Text>
+                </View>
+              );
+            })
+          }
+        </ScrollView>
+      </View>
     </View>
   );
 }
@@ -50,10 +62,11 @@ export default function App() {
 /** Estilo, crear para cada conjunto de elementos */
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     backgroundColor: "#ccc",
     justifyContent: "flex-start",
     alignItems: "center",
-    flex: 1
+    height: "90%"
   },
   inputGroup: {
     flexDirection: "row",
@@ -73,4 +86,25 @@ const styles = StyleSheet.create({
   productButton: {
     width: "25%",
   },
+  listContainer: {
+    width: "100%",
+    padding: 20
+  },
+  listItem: {
+    height: 100,
+    width: "100%",
+    backgroundColor: "orange",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "red",
+    shadowColor: "yellow",
+    borderRadius: 5,
+    margin: 0
+  },
+  itemText: {
+    color: "white",
+    fontSize: 50,
+    fontWeight: "bold"
+  }
 });

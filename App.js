@@ -1,12 +1,22 @@
+import { useState } from "react";
+
 import { Button, StyleSheet, TextInput, View } from "react-native";
 
 export default function App() {
+  const [productName, setproductName] = useState("");
+  
+  const productNameHandler = (productText) => {
+    setproductName(productText);
+    console.log(productText);
+  }
   return (
     <View style={styles.container}>
       <View style={styles.inputGroup}>
         <TextInput
           style={styles.productInput}
           placeholder="Add a new product to shopping list"
+          onChangeText={productNameHandler}
+          //(userText) => setproductName(userText)
         />
         <Button style={styles.productButton} title="Add" />
       </View>

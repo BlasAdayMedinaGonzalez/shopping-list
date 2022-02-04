@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import InputGroup from "./components/InputGroup";
+import Item from "./components/ProductItem";
 
 export default function App() {
   const [productList, setproductList] = useState([]);
@@ -21,13 +22,7 @@ export default function App() {
       <InputGroup onAddproductHandler={addproductHandler} />
       <View style={styles.listContainer}>
         <ScrollView>
-          {productList.map((product) => {
-            return (
-              <View key={Math.random().toString()} style={styles.listItem}>
-                <Text style={styles.itemText}>{product}</Text>
-              </View>
-            );
-          })}
+          {productList.map((product) => <Item key={Math.random().toString()} value={product} /> )}
         </ScrollView>
       </View>
     </View>

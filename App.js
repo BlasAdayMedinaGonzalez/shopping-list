@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import InputGroup from "./components/InputGroup";
 import Item from "./components/Item";
 
@@ -30,9 +30,24 @@ export default function App() {
     <View style={styles.container}>
       <InputGroup onAddproductHandler={addproductHandler} />
       <View style={styles.listContainer}>
-        <ScrollView>
+        <FlatList data = {productList} renderItem={itemData => {
+          const {key, value} = itemData.item;
+          return (
+          <Item 
+          value={value} 
+          onDelete={() => deleteproductHandler(key)} />
+          );
+        }}/>
+        {/* Mejor forma: */}
+        {/* <FlatList data = {productList} renderItem={itemData => (
+          <Item 
+          value={itemData.item.value} 
+          onDelete={() => deleteproductHandler(itemData.item.key)} 
+          />
+        )}/> */}
+        {/* <ScrollView>
           {productList.map((product) => <Item key={product.key} value={product.value} onDelete={() => deleteproductHandler(product.key)} /> )}
-        </ScrollView>
+        </ScrollView> */}
       </View>
     </View>
   );

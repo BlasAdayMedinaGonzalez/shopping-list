@@ -1,11 +1,13 @@
 import { useState } from "react";
 
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button } from "react-native-web";
 import InputGroup from "./components/InputGroup";
 import Item from "./components/Item";
 
 export default function App() {
   const [productList, setproductList] = useState([]);
+  const [showModal, setshowModal] = useState(false);
 
   const addproductHandler = (productName) => {
     if (productName !== "") {
@@ -16,6 +18,7 @@ export default function App() {
           value: productName
         },
       ]);
+      setshowModal(false);
     }
     console.log(productList);
   };
@@ -28,7 +31,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <InputGroup onAddproductHandler={addproductHandler} />
+      <Button title={"Add"} onPress={() => setshowModal(true)} />
+      <InputGroup onAddproductHandler={addproductHandler} addModal={showModal} />
       <View style={styles.listContainer}>
         <FlatList data = {productList} renderItem={itemData => {
           const {key, value} = itemData.item;

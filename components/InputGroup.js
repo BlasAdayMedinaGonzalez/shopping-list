@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import { Modal, Button, StyleSheet, TextInput, View } from "react-native";
 
-const InputGroup = ({onAddproductHandler}) => {
+const InputGroup = ({onAddproductHandler, addModal}) => {
   const [productName, setproductName] = useState("");
 
   const productNameHandler = (productText) => {
@@ -15,32 +15,33 @@ const InputGroup = ({onAddproductHandler}) => {
   };
 
   return (
-    <View style={styles.inputGroup}>
-      <TextInput
-        style={styles.productInput}
-        placeholder="Add a new product to shopping list"
-        value={productName}
-        onChangeText={productNameHandler}
-        //(userText) => setproductName(userText)
-      />
-      <Button
-        style={styles.productButton}
-        title="Add"
-        onPress={validateProduct}
-      />
-    </View>
+    <Modal visible={addModal} animationType={"slide"} transparent={true}>
+      <View style={styles.inputGroup}>
+        <TextInput
+          style={styles.productInput}
+          placeholder="Add a new product to shopping list"
+          value={productName}
+          onChangeText={productNameHandler}
+          //(userText) => setproductName(userText)
+        />
+        <Button
+          style={styles.productButton}
+          title="Add"
+          onPress={validateProduct}
+        />
+      </View>
+    </Modal>
+    
   );
 };
 
 const styles = StyleSheet.create({
   inputGroup: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
-    borderColor: "black",
-    borderWidth: 1,
-    width: "100%",
     padding: 20,
+    flex: 1
   },
   productInput: {
     width: "75%",

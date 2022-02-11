@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import InputGroup from "./components/InputGroup";
-import Item from "./components/ProductItem";
+import Item from "./components/Item";
 
 export default function App() {
   const [productList, setproductList] = useState([]);
@@ -11,18 +11,27 @@ export default function App() {
     if (productName !== "") {
       setproductList((currentProductList) => [
         ...currentProductList,
-        productName,
+        {
+          key: Math.random().toString(),
+          value: productName
+        },
       ]);
     }
     console.log(productList);
   };
+
+  const deleteproductHandler = (productKey) => {
+    setproductList((currentList) => {
+      return currentList.filter(product => product.key !== productKey);
+    })
+  }
 
   return (
     <View style={styles.container}>
       <InputGroup onAddproductHandler={addproductHandler} />
       <View style={styles.listContainer}>
         <ScrollView>
-          {productList.map((product) => <Item key={Math.random().toString()} value={product} /> )}
+          {productList.map((product) => <Item key={product.key} value={product.value} onDelete={() => deleteproductHandler(product.key)} /> )}
         </ScrollView>
       </View>
     </View>
